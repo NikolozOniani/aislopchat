@@ -1,0 +1,14 @@
+services:
+  nightwave:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_PATH: /app/data/nightwave.db
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-}
+      FORCE_SECURE_COOKIE: ${FORCE_SECURE_COOKIE:-0}
+    volumes:
+      - nightwave_data:/app/data
+volumes:
+  nightwave_data:

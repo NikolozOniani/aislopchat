@@ -1,0 +1,22 @@
+# Render Blueprint: New > Blueprint > select the GitHub repository.
+# This launches BOTH the website and real-time backend at one HTTPS URL.
+# Uses a paid Starter plan because a persistent disk is required.
+services:
+  - type: web
+    name: nightwave-chat
+    runtime: docker
+    plan: starter
+    numInstances: 1
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    autoDeployTrigger: commit
+    disk:
+      name: nightwave-data
+      mountPath: /app/data
+      sizeGB: 1
+    envVars:
+      - key: DATABASE_PATH
+        value: /app/data/nightwave.db
+      - key: FORCE_SECURE_COOKIE
+        value: "1"
